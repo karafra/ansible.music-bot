@@ -1,0 +1,35 @@
+---
+- hosts: karafra.dev
+  connection: local
+  become: true
+  tasks:
+    - name: Checkout project repository
+      ansible.builtin.git:
+        repo: '{{ repository }}'
+        dest: '/tmp/ansible/{{ projectName }}'
+    - name: Build docker image
+      docker_image:
+        state: present
+        force_tag: true
+        force_source: true
+        name: '{{ projectName }}'
+        source: build
+        build:
+          args:
+            OWNER: '{{ owner }}'
+            PREFIX: '{{ prefix }}'
+            TOKEN: "{{ discordBotToken }}"
+            INACTIVE_THRESHOLD: '{{ inactiveThreshold }}'
+            RABBIT_HOSTNAME: '{{ rabbitHostname }}'
+            RABBIT_USERNAME: '{{ rabbitUsername }}'
+            RABBIT_PASSWORD: '{{ rabbitPassword }}'
+            RABBIT_VIRTUALHOST: '{{ rabbitVirtualhost }}'
+            RABBIT_CONNECTION_TIMEOUT: '{{ rabbitConnectionTimeout }}'
+            RABBIT_REQUEST_HEARTBEAT: '{{ rabbitRequestHeartbeat }}'
+            RABBIT_QUEUE_TTL: '{{ rabbitQueueTtl }}'
+          path: '/tmp/ansible/{{ projectName }}'
+        tag: latest
+    - name: Cleanup
+      ansible.builtin.file:
+        state: absent
+        path: '/tmp/ansible/{{ projectName }}'

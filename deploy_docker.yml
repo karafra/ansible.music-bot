@@ -1,0 +1,10 @@
+---
+- hosts: karafra.dev
+  connection: local
+  become: true
+  tasks:
+    - name: Run container
+      docker_container:
+        name: '{{ projectName }}'
+        state: started
+        image: '{{ projectName }}:latest'
