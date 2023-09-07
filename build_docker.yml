@@ -19,14 +19,10 @@
             OWNER: '{{ owner }}'
             PREFIX: '{{ prefix }}'
             TOKEN: "{{ discordBotToken }}"
-            INACTIVE_THRESHOLD: '{{ inactiveThreshold }}'
             RABBIT_HOSTNAME: '{{ rabbitHostname }}'
             RABBIT_USERNAME: '{{ rabbitUsername }}'
             RABBIT_PASSWORD: '{{ rabbitPassword }}'
             RABBIT_VIRTUALHOST: '{{ rabbitVirtualhost }}'
-            RABBIT_CONNECTION_TIMEOUT: '{{ rabbitConnectionTimeout }}'
-            RABBIT_REQUEST_HEARTBEAT: '{{ rabbitRequestHeartbeat }}'
-            RABBIT_QUEUE_TTL: '{{ rabbitQueueTtl }}'
           path: '/tmp/ansible/{{ projectName }}'
         tag: latest
     - name: Cleanup
